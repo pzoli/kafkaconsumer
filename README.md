@@ -7,7 +7,7 @@ A kafka consumer sample app.
 Set enviroment variables (Linux)
 ```bash
 export KAFKA_PASSWORD=$USER1_PASSWORD
-export KAFKA_BOOTSTRAP_SERVER=$CONTROLLER_HOSTNAME:$EXTERNAL_PORT
+export KAFKA_BOOTSTRAP_SERVER=$CONTROLLER_HOSTNAME:$SERVICE_EXTERNAL_PORT
 ```
 set hostname in /etc/hosts
 EXTERNAL_IP  kafka-controller-0.kafka-controller-headless.kafka.svc.cluster.local kafka-controller-1.kafka-controller-headless.kafka.svc.cluster.local kafka-controller-2.kafka-controller-headless.kafka.svc.cluster.local
