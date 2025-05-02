@@ -15,6 +15,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.annotation.TopicPartition;
 
 @EnableKafka
 @Configuration
@@ -44,7 +45,12 @@ public class KafkaConsumerConfig {
         configProps.put(
                 ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
                 StringDeserializer.class);
-                
+        configProps.put(
+                ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG,
+                "org.apache.kafka.clients.consumer.RangeAssignor");
+        configProps.put(
+                        ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG,
+                        "org.apache.kafka.clients.consumer.RangeAssignor");
         configProps.put(
                 SaslConfigs.SASL_MECHANISM, "PLAIN");
         configProps.put(
@@ -63,8 +69,11 @@ public class KafkaConsumerConfig {
         return factory;
     }
 
-    @KafkaListener(topics = "test", groupId = "${spring.kafka.consumer.group-id}")
+    
+    @KafkaListener(id = "test", groupId = "${spring.kafka.consumer.group-id}", topicPartitions= {
+            @TopicPartition(topic = "test", partitions = { "0" })})
+    //@KafkaListener(id = "test", groupId = "${spring.kafka.consumer.group-id}", topics = "test")
     public void listenGroupFoo(String message) {
-        System.out.println("Received Message in group foo: " + message);
+        System.out.println("Received Message in group1: " + message);
     }
 }
