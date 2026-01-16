@@ -51,6 +51,7 @@ public class KafkaConsumerConfig {
         configProps.put(
                         ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG,
                         "org.apache.kafka.clients.consumer.RangeAssignor");
+        //*
         configProps.put(
                 SaslConfigs.SASL_MECHANISM, "PLAIN");
         configProps.put(
@@ -59,6 +60,8 @@ public class KafkaConsumerConfig {
         configProps.put(
                 SaslConfigs.SASL_JAAS_CONFIG,
                 kafka_jaas_config);
+
+         //*/
         return new DefaultKafkaConsumerFactory<>(configProps);
     }
 
@@ -70,9 +73,9 @@ public class KafkaConsumerConfig {
     }
 
     
-    @KafkaListener(id = "test", groupId = "${spring.kafka.consumer.group-id}", topicPartitions= {
-            @TopicPartition(topic = "test", partitions = { "0" })})
-    //@KafkaListener(id = "test", groupId = "${spring.kafka.consumer.group-id}", topics = "test")
+    //@KafkaListener(id = "test", groupId = "${spring.kafka.consumer.group-id}", topicPartitions= {
+    //        @TopicPartition(topic = "test", partitions = { "0" })})
+    @KafkaListener(id = "test", groupId = "${spring.kafka.consumer.group-id}", topics = "test")
     public void listenGroupFoo(String message) {
         System.out.println("Received Message in group1: " + message);
     }
